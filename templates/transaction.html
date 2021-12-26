@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+
+<div class="container-fluid tx-detail">
+    <h4>Transaction {{ transaction.hash.hex() }}</h4>
+    <h5>Details</h5>
+    <table class="table table-light">
+    <tr>
+        <th scope="row">From:</th>
+        <td><a href="/address?address={{ transaction['from'] }}">{{ transaction.from }}</a></td>
+    </tr>
+    <tr>
+        <th scope="row">To:</th>
+        <td><a href="/address?address={{ transaction['to'] }}">{{ transaction.to }}</a></td>
+    </tr>
+    <tr>
+        <th scope="row">Gas used:</th>
+        <td>{{ transaction.gas }}</td>
+    </tr>
+    <tr>
+        <th scope="row">Gas price:</th>
+        <td>{{ transaction.gasPrice / 1000000000 }} Gwei</td>
+    </tr>
+    <tr>
+        <th scope="row">Value:</th>
+        <td>{{ value }} ether</td>
+    </tr>
+    <tr>
+        <th scope=row>Trasaction fee:</th>
+        <td>
+            {{ receipt.gasUsed * gas_price }} Ether 
+            (${{ (receipt.gasUsed * gas_price)|float * eth_price['last'] }})
+        </td>
+    </tr>
+    </table>
+<div>
+
+
+
+
+{% endblock %}
+

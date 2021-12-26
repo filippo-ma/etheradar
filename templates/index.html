@@ -1,0 +1,61 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="container-fluid"> 
+    <div class="row mt-4 mb-4">
+        <div class="col-3">
+            <h3>ether price</h3>
+            <p>{{ eth_price.last }} USD</p>
+        </div>
+        <div class="col-3">
+            <h3>gas price</h3>
+            {{ eth.gas_price / 1000000000}} Gwei
+        </div>
+    </div><br>
+
+    <div class="row">
+        <div class="col-6">
+            <h3>latest blocks</h3>
+
+            <table class="table">
+                {% for block in latest_blocks %}
+                <tr>
+                    <td>
+                        <h5>Block</h5>
+                        <a href="/block/{{ block.number }}">{{ block.number }}</a>
+                        <p>{{ (current_time - block.timestamp)|int }} seconds ago</p>
+                    </td>
+                    <td>
+                        <h5>Miner</h5>
+                        <a href="/address?address={{ block.miner }}">{{ block.miner.lower() }}</a>
+                        <p>{{ block.transactions|length }} transactions</p>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+
+        </div>
+        <div class="col-6">
+            <h3>lastest transactions</h3>
+            <table class="table">
+                {% for transaction in latest_transactions  %}
+                <tr>
+                    <td>
+                        <h5>Hash</h5>
+                        <p><a href="/transaction/{{ transaction['hash'].hex() }}">{{ transaction['hash'].hex() }}</a></p>
+                        <p><strong>From:</strong> <a href="/address?address={{ transaction['from'] }}">{{ transaction['from'] }}</a></p>
+                        <p><strong>To:</strong> <a href="/address?address={{ transaction['to'] }}">{{ transaction['to'] }}</a></p>
+                    </td>
+                </tr>
+                {% endfor %}   
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+{% endblock %}
